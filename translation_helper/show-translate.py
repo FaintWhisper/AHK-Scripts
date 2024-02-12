@@ -77,8 +77,10 @@ def translate_and_display():
 
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
+    
+    widget_width = screen_width // 1.5
 
-    label = tk.Label(window, text=translation, font=("Helvetica", 24), fg="white", bg="black")
+    label = tk.Label(window, text=translation, font=("Helvetica", 24), fg="white", bg="black", wraplength=widget_width)
     label.pack(padx=20, pady=20)
 
     window_width = label.winfo_reqwidth() + 40
@@ -88,9 +90,15 @@ def translate_and_display():
     y = (screen_height - window_height) // 2
 
     window.geometry(f"{window_width}x{window_height}+{x}+{y}")
+    
+    # Regain focus to the window
+    window.focus_force()
 
-    # Bind event to dismiss the window when clicked outside the widget
+    # Bind event to dismiss the window when focus is lost
     window.bind("<FocusOut>", dismiss)
+    
+    # Bind ESC key to dismiss the window
+    window.bind("<Escape>", dismiss)
 
     window.mainloop()
 
